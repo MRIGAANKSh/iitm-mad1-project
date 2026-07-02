@@ -21,4 +21,28 @@ def create_app():
         from app import models
         db.create_all()
 
+        from app.models import User
+        from werkzeug.security import generate_password_hash
+
+        admin=User.query.filter_by(
+            email="admin@trek.com"
+        ).first()
+
+        if not admin:
+            admin=User(
+                name="Administrator",
+                email="admin@trek.com",
+                password=generate_password_hash("admin123"),
+                phone="9999999999",
+                role="admin",
+                status="active",
+            )
+
+            db.session.add(admin)
+            db.session.commit()
+
+            print("Default Admin Created")
+
+
+
     return app
