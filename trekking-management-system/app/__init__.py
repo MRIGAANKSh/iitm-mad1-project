@@ -13,9 +13,15 @@ def create_app():
 
     login_manager.init_app(app)
 
-    from app.auth.routes import auth_bp
+    from app.auth import auth_bp
+    from app.admin import admin_bp
+    from app.staff import staff_bp
+    from app.user import user_bp
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(staff_bp)
+    app.register_blueprint(user_bp)
 
     with app.app_context():
         from app import models
