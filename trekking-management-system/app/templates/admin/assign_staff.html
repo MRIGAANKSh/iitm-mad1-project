@@ -1,0 +1,89 @@
+{% extends 'admin/layout.html' %}
+
+{% block admin_content %}
+
+<h2>
+
+Assign Staff
+
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h4>
+
+{{ trek.name }}
+
+</h4>
+
+<p>
+
+Location :
+{{ trek.location }}
+
+</p>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>
+
+Select Staff
+
+</label>
+
+<select
+class="form-select"
+name="staff_id"
+required>
+
+<option value="">
+
+Choose Staff
+
+</option>
+
+{% for member in staff_members %}
+
+<option
+value="{{ member.id }}"
+
+{% if trek.staff_id==member.id %}
+selected
+{% endif %}>
+
+{{ member.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Assign
+
+</button>
+
+<a
+href="{{ url_for('admin.view_treks') }}"
+class="btn btn-secondary">
+
+Back
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

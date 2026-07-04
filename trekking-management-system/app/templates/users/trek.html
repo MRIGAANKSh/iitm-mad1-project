@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>Available Treks</h2>
+
+<form method="GET" class="row mb-4">
+
+<div class="col-md-4">
+
+<select
+name="difficulty"
+class="form-select">
+
+<option value="">
+
+All Difficulties
+
+</option>
+
+<option>Easy</option>
+<option>Moderate</option>
+<option>Hard</option>
+
+</select>
+
+</div>
+
+<div class="col-md-4">
+
+<input
+type="text"
+name="location"
+class="form-control"
+placeholder="Location">
+
+</div>
+
+<div class="col-md-4">
+
+<button
+class="btn btn-primary">
+
+Search
+
+</button>
+
+</div>
+
+</form>
+
+<div class="row">
+
+{% for trek in treks %}
+
+<div class="col-md-4 mb-4">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h4>
+
+{{ trek.name }}
+
+</h4>
+
+<p>
+
+📍 {{ trek.location }}
+
+</p>
+
+<p>
+
+Difficulty:
+{{ trek.difficulty }}
+
+</p>
+
+<p>
+
+Duration:
+{{ trek.duration }} Days
+
+</p>
+
+<p>
+
+Slots Left:
+{{ trek.available_slots }}
+
+</p>
+
+<a
+class="btn btn-success"
+
+href="{{ url_for('user.trek_details',trek_id=trek.id) }}">
+
+View Details
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,10 +1,95 @@
-{% extends 'base.html' %}
+{% extends 'admin/layout.html' %}
 
-{% block content %}
+{% block admin_content %}
 
-<h1>Admin Dashboard</h1>
+<h2 class="mb-4">
 
-<p>Welcome {{ current_user.name }}</p>
+Admin Dashboard
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="card shadow mb-3">
+
+<div class="card-body">
+
+<h5>Total Treks</h5>
+
+<h2>
+
+{{ total_treks }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card shadow mb-3">
+
+<div class="card-body">
+
+<h5>Total Users</h5>
+
+<h2>
+
+{{ total_users }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card shadow mb-3">
+
+<div class="card-body">
+
+<h5>Total Staff</h5>
+
+<h2>
+
+{{ total_staff }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card shadow mb-3">
+
+<div class="card-body">
+
+<h5>Total Bookings</h5>
+
+<h2>
+
+{{ total_bookings }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 {% endblock %}
-

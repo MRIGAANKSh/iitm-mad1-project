@@ -1,0 +1,112 @@
+{% extends 'admin/layout.html' %}
+
+{% block admin_content %}
+
+<div class="d-flex justify-content-between mb-3">
+
+<h2>Manage Treks</h2>
+
+<a href="{{ url_for('admin.add_trek') }}"
+class="btn btn-success">
+
+Add Trek
+
+</a>
+
+</div>
+
+<table class="table table-bordered table-hover">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Location</th>
+
+<th>Difficulty</th>
+
+<th>Slots</th>
+
+<th>Status</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for trek in treks %}
+
+<tr>
+
+<td>{{ trek.id }}</td>
+
+<td>{{ trek.name }}</td>
+
+<td>{{ trek.location }}</td>
+
+<td>{{ trek.difficulty }}</td>
+
+<td>{{ trek.available_slots }}</td>
+
+<td>{{ trek.status }}</td>
+
+<td>
+
+<a
+class="btn btn-warning btn-sm"
+
+href="{{ url_for('admin.edit_trek',trek_id=trek.id) }}">
+
+Edit
+
+</a>
+
+<a
+class="btn btn-info btn-sm"
+
+href="{{ url_for('admin.assign_staff',trek_id=trek.id) }}">
+
+Assign Staff
+
+</a>
+<td>
+
+{% if trek.staff %}
+
+{{ trek.staff.name }}
+
+{% else %}
+
+Not Assigned
+
+{% endif %}
+
+</td>
+
+<a
+class="btn btn-danger btn-sm"
+
+href="{{ url_for('admin.delete_trek',trek_id=trek.id) }}">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}

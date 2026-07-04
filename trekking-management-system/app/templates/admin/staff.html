@@ -1,0 +1,120 @@
+{% extends 'admin/layout.html' %}
+
+{% block admin_content %}
+
+<h2 class="mb-4">
+
+Manage Staff
+
+</h2>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for member in staff %}
+
+<tr>
+
+<td>{{ member.id }}</td>
+
+<td>{{ member.name }}</td>
+
+<td>{{ member.email }}</td>
+
+<td>
+
+{% if member.status=="pending" %}
+
+<span class="badge bg-warning">
+
+Pending
+
+</span>
+
+{% elif member.status=="active" %}
+
+<span class="badge bg-success">
+
+Active
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+Blacklisted
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if member.status=="pending" %}
+
+<a
+class="btn btn-success btn-sm"
+
+href="{{ url_for('admin.approve_staff',user_id=member.id) }}">
+
+Approve
+
+</a>
+
+{% elif member.status=="active" %}
+
+<a
+class="btn btn-danger btn-sm"
+
+href="{{ url_for('admin.blacklist_staff',user_id=member.id) }}">
+
+Blacklist
+
+</a>
+
+{% else %}
+
+<a
+class="btn btn-primary btn-sm"
+
+href="{{ url_for('admin.reactivate_staff',user_id=member.id) }}">
+
+Reactivate
+
+</a>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}
