@@ -60,10 +60,26 @@ class Trek(db.Model):
             backref="trek",
             lazy=True
         )
+        description = db.Column(db.Text)
+
+        price = db.Column(db.Float)
+
+        image = db.Column(db.String(255))
+
+        max_altitude = db.Column(db.Integer)
+
+        meeting_point = db.Column(db.String(200))
 
         
 class Booking(db.Model):
       __tablename__="bookings"
+      __table_args__ = (
+    db.UniqueConstraint(
+        "user_id",
+        "trek_id",
+        name="unique_booking"
+    ),
+)
       id=db.Column(db.Integer,primary_key=True)
 
       bookings_date=db.Column(

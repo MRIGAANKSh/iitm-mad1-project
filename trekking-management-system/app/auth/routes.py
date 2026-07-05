@@ -38,10 +38,7 @@ def login():
 
         if not user:
 
-            flash(
-                "Invalid Email",
-                "danger"
-            )
+            flash("Invalid email or password.", "danger")
 
             return redirect(
                 url_for("auth.login")
@@ -52,10 +49,7 @@ def login():
             password
         ):
 
-            flash(
-                "Incorrect Password",
-                "danger"
-            )
+            flash("Invalid email or password.", "danger")
 
             return redirect(
                 url_for("auth.login")

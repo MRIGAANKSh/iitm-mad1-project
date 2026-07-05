@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>
+
+{{ trek.name }}
+
+</h2>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>
+
+Available Slots
+
+</label>
+
+<input
+
+type="number"
+
+class="form-control"
+
+name="slots"
+
+value="{{ trek.available_slots }}">
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Status
+
+</label>
+
+<select
+
+class="form-select"
+
+name="status">
+
+<option
+
+{% if trek.status=="Open" %}
+selected
+{% endif %}>
+
+Open
+
+</option>
+
+<option
+
+{% if trek.status=="Closed" %}
+selected
+{% endif %}>
+
+Closed
+
+</option>
+
+<option
+
+{% if trek.status=="Completed" %}
+selected
+{% endif %}>
+
+Completed
+
+</option>
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Save
+
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

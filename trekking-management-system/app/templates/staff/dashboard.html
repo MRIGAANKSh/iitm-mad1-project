@@ -2,9 +2,75 @@
 
 {% block content %}
 
-<h1>Staff Dashboard</h1>
+<div class="container mt-4">
 
-<p>Welcome {{ current_user.name }}</p>
+<h2>
+
+Welcome {{ current_user.name }}
+
+</h2>
+
+
+<hr>
+
+<div class="row">
+
+{% for trek in treks %}
+
+<div class="col-md-4">
+
+<div class="card shadow mb-3">
+
+<div class="card-body">
+
+<h4>
+
+{{ trek.name }}
+
+</h4>
+
+<p>
+
+{{ trek.location }}
+
+</p>
+
+<p>
+
+Status
+
+{{ trek.status }}
+
+</p>
+
+<a
+class="btn btn-success"
+
+href="{{ url_for('staff.manage_trek',trek_id=trek.id) }}">
+
+Manage Trek
+
+</a>
+<a
+
+class="btn btn-primary"
+
+href="{{ url_for('staff.participants',trek_id=trek.id) }}">
+
+Participants
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
 
 {% endblock %}
-

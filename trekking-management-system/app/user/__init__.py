@@ -10,3 +10,5 @@ from . import dashboard
 from . import treks
 from . import bookings
 from . import profile
+
+from . import profile

@@ -23,6 +23,10 @@ def dashboard():
 
     total_bookings = Booking.query.count()
 
+    recent_bookings = Booking.query.order_by(
+    Booking.bookings_date.desc()
+)   .limit(5).all()
+
     recent_users = User.query.filter_by(
         role="user"
     ).order_by(
@@ -33,12 +37,33 @@ def dashboard():
         Trek.id.desc()
     ).limit(5).all()
 
+    pending_staff = User.query.filter_by(
+    role="staff",
+    status="pending"
+).count()
+
+    completed_treks = Trek.query.filter_by(
+    status="Completed"
+).count()
+
+    open_treks = Trek.query.filter_by(
+    status="Open"
+).count()
+
+    cancelled_bookings = Booking.query.filter_by(
+    status="Cancelled"
+).count()
+
     return render_template(
         "admin/dashboard.html",
         total_treks=total_treks,
         total_users=total_users,
         total_staff=total_staff,
         total_bookings=total_bookings,
+    recent_bookings=recent_bookings,
         recent_users=recent_users,
         recent_treks=recent_treks
     )
+
+
+

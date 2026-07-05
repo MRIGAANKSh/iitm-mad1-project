@@ -1,0 +1,146 @@
+{% extends 'admin/layout.html' %}
+
+{% block admin_content %}
+
+<h2>Search</h2>
+
+<form method="GET">
+
+<div class="input-group mb-4">
+
+<input
+type="text"
+name="q"
+class="form-control"
+placeholder="Search trek, staff or user..."
+value="{{ keyword }}">
+
+<button class="btn btn-success">
+
+Search
+
+</button>
+
+</div>
+
+</form>
+
+{% if keyword %}
+
+<h3>Treks</h3>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Location</th>
+
+<th>Difficulty</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for trek in treks %}
+
+<tr>
+
+<td>{{ trek.name }}</td>
+
+<td>{{ trek.location }}</td>
+
+<td>{{ trek.difficulty }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<h3>Staff</h3>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for member in staff %}
+
+<tr>
+
+<td>{{ member.name }}</td>
+
+<td>{{ member.email }}</td>
+
+<td>{{ member.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<h3>Users</h3>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for user in users %}
+
+<tr>
+
+<td>{{ user.name }}</td>
+
+<td>{{ user.email }}</td>
+
+<td>{{ user.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endif %}
+
+{% endblock %}

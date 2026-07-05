@@ -2,11 +2,11 @@
 
 <div class="container">
 
-<a class="navbar-brand"
-
+<a
+class="navbar-brand"
 href="/">
 
-Trekking Management
+🏔 Trekking
 
 </a>
 
@@ -16,19 +16,9 @@ Trekking Management
 
 <li class="nav-item">
 
-<span class="nav-link">
-
-{{ current_user.name }}
-
-</span>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link"
-
-href="{{ url_for('auth.logout') }}">
+<a
+class="nav-link"
+href="/logout">
 
 Logout
 
@@ -40,11 +30,23 @@ Logout
 
 <li class="nav-item">
 
-<a class="nav-link"
-
-href="{{ url_for('auth.login') }}">
+<a
+class="nav-link"
+href="/login">
 
 Login
+
+</a>
+
+</li>
+
+<li class="nav-item">
+
+<a
+class="nav-link"
+href="/register">
+
+Register
 
 </a>
 
