@@ -15,7 +15,7 @@ from app.extensions import db
 
 from app.utils.decorators import staff_required
 
-
+#staff trek route
 @staff_bp.route("/trek/<int:trek_id>",methods=["GET","POST"])
 
 @login_required
@@ -23,14 +23,12 @@ from app.utils.decorators import staff_required
 def manage_trek(trek_id):
 
     trek = Trek.query.get_or_404(trek_id)
-
     if trek.staff_id != current_user.id:
 
         flash(
             "Unauthorized",
             "danger"
         )
-
         return redirect(
             url_for("staff.dashboard")
         )
@@ -40,20 +38,16 @@ def manage_trek(trek_id):
         trek.available_slots=int(
             request.form["slots"]
         )
-
         trek.status=request.form["status"]
 
         db.session.commit()
-
         flash(
             "Trek Updated",
             "success"
         )
-
         return redirect(
             url_for("staff.dashboard")
         )
-
     return render_template(
         "staff/manage_trek.html",
         trek=trek

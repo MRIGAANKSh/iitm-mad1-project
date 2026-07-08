@@ -10,6 +10,7 @@ from app.models import Trek
 
 from app.utils.decorators import admin_required
 
+# to search the bookings or users or treks etc
 
 @admin_bp.route("/search")
 @login_required
@@ -24,7 +25,7 @@ def search():
 
     if keyword:
 
-        treks = Trek.query.filter(
+        treks = =Trek.query.filter(
             (Trek.name.ilike(f"%{keyword}%")) |
             (Trek.location.ilike(f"%{keyword}%"))
         ).all()
@@ -37,7 +38,7 @@ def search():
             )
         ).all()
 
-        users = User.query.filter(
+        users =User.query.filter(
             (User.role == "user") &
             (
                 User.name.ilike(f"%{keyword}%") |

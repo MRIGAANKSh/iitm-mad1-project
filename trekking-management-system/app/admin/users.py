@@ -13,6 +13,8 @@ from app.extensions import db
 from app.utils.decorators import admin_required
 
 
+#users route
+
 @admin_bp.route("/users")
 @login_required
 @admin_required
@@ -27,7 +29,7 @@ def manage_users():
         users=users
     )
 
-
+#users blacklist route
 @admin_bp.route("/users/blacklist/<int:user_id>")
 @login_required
 @admin_required
@@ -51,6 +53,7 @@ def blacklist_user(user_id):
         url_for("admin.manage_users")
     )
 
+#users activate route
 
 @admin_bp.route("/users/activate/<int:user_id>")
 @login_required
@@ -75,7 +78,7 @@ def activate_user(user_id):
         url_for("admin.manage_users")
     )
 
-
+#users seach route
 @admin_bp.route("/users/search")
 @login_required
 @admin_required

@@ -5,6 +5,8 @@ from app.utils.decorators import staff_required
 
 from . import staff_bp
 
+
+#dashbaord route
 @staff_bp.route("/dashboard")
 @login_required
 @staff_required

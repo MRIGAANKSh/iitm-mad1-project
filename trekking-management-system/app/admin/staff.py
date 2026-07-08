@@ -11,7 +11,7 @@ from app.models import User
 from app.extensions import db
 from app.utils.decorators import admin_required
 
-
+# staff route for admin
 
 @admin_bp.route("/staff")
 
@@ -29,7 +29,7 @@ def manage_staff():
     )
 
 
-
+# route for staff approval by admin
 @admin_bp.route("/staff/approve/<int:user_id>")
 
 @login_required
@@ -56,7 +56,7 @@ def approve_staff(user_id):
 
 
 
-
+# for blacklist route.. to show the blacklist staff
 @admin_bp.route("/staff/blacklist/<int:user_id>")
 @login_required
 @admin_required

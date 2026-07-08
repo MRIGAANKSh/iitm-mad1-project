@@ -1,10 +1,11 @@
 from flask import render_template
 from flask_login import login_required
-
 from . import admin_bp
 from app.models import User, Trek, Booking
 from app.utils.decorators import admin_required
 
+
+# admin dashboard routes.
 
 @admin_bp.route("/dashboard")
 @login_required
@@ -12,48 +13,47 @@ from app.utils.decorators import admin_required
 def dashboard():
 
     total_treks = Trek.query.count()
-
-    total_users = User.query.filter_by(
+    total_users =User.query.filter_by(
         role="user"
     ).count()
 
-    total_staff = User.query.filter_by(
+
+    total_staff =User.query.filter_by(
         role="staff"
     ).count()
-
-    total_bookings = Booking.query.count()
-
-    recent_bookings = Booking.query.order_by(
+    total_bookings =Booking.query.count()
+    recent_bookings =Booking.query.order_by(
     Booking.bookings_date.desc()
 )   .limit(5).all()
+    
+
+
 
     recent_users = User.query.filter_by(
         role="user"
     ).order_by(
         User.id.desc()
     ).limit(5).all()
-
-    recent_treks = Trek.query.order_by(
+    recent_treks =Trek.query.order_by(
         Trek.id.desc()
     ).limit(5).all()
-
-    pending_staff = User.query.filter_by(
+    pending_staff =User.query.filter_by(
     role="staff",
     status="pending"
-).count()
 
+
+    
+).count()
     completed_treks = Trek.query.filter_by(
     status="Completed"
 ).count()
-
     open_treks = Trek.query.filter_by(
     status="Open"
 ).count()
-
     cancelled_bookings = Booking.query.filter_by(
     status="Cancelled"
 ).count()
-
+    # assinging the values to the rendertemplate for the flask app
     return render_template(
         "admin/dashboard.html",
         total_treks=total_treks,

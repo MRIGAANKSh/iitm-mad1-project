@@ -13,25 +13,24 @@ from app.models import Trek
 from app.utils.decorators import staff_required
 
 
+#participants in the trek...
+
 @staff_bp.route("/participants/<int:trek_id>")
 @login_required
 @staff_required
 def participants(trek_id):
 
     trek = Trek.query.get_or_404(trek_id)
-
     if trek.staff_id != current_user.id:
-
         flash(
             "Unauthorized",
             "danger"
         )
-
         return redirect(
             url_for("staff.dashboard")
         )
 
-    bookings = trek.bookings
+    bookings =trek.bookings
 
     return render_template(
         "staff/participants.html",

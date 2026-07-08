@@ -27,19 +27,14 @@ def home():
 def login():
 
     if request.method == "POST":
-
         email = request.form["email"]
 
-        password = request.form["password"]
-
+        password =request.form["password"]
         user = User.query.filter_by(
             email=email
         ).first()
-
         if not user:
-
             flash("Invalid email or password.", "danger")
-
             return redirect(
                 url_for("auth.login")
             )
@@ -48,31 +43,27 @@ def login():
             user.password,
             password
         ):
-
             flash("Invalid email or password.", "danger")
-
             return redirect(
                 url_for("auth.login")
             )
-
         if user.status == "blacklisted":
-
             flash(
                 "Account Blacklisted",
                 "danger"
             )
-
             return redirect(
                 url_for("auth.login")
             )
 
         if user.role == "staff" and user.status == "pending":
 
+
+
             flash(
                 "Wait for Admin Approval",
                 "warning"
             )
-
             return redirect(
                 url_for("auth.login")
             )
@@ -83,17 +74,13 @@ def login():
             "Login Successful",
             "success"
         )
-
         if user.role == "admin":
-
             return redirect(
                 url_for(
                     "admin.dashboard"
                 )
             )
-
         elif user.role == "staff":
-
             return redirect(
                 url_for(
                     "staff.dashboard"
@@ -105,10 +92,12 @@ def login():
                 "user.dashboard"
             )
         )
-
     return render_template(
         "auth/login.html"
     )
+
+
+#login route
 
 @auth_bp.route("/register", methods = ["GET", "POST"])
 def register():
@@ -155,18 +144,16 @@ def register():
 
     )
 
-
+#logout route
 @auth_bp.route("/logout")
 @login_required
 def logout():
 
     logout_user()
-
     flash(
         "Logged Out Successfully",
         "success"
     )
-
     return redirect(
         url_for("auth.login")
     )

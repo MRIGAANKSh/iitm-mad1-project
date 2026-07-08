@@ -14,20 +14,20 @@ from app.extensions import db
 from app.models import Trek, User
 from app.utils.decorators import admin_required
 
-
+# trek routes
 @admin_bp.route("/treks")
 @login_required
 @admin_required
 def view_treks():
 
-    treks = Trek.query.order_by(Trek.id.desc()).all()
+    treks =Trek.query.order_by(Trek.id.desc()).all()
 
     return render_template(
         "admin/treks.html",
         treks=treks
     )
 
-
+#trek add route
 @admin_bp.route("/treks/add", methods=["GET", "POST"])
 @login_required
 @admin_required
@@ -35,7 +35,7 @@ def add_trek():
 
     if request.method == "POST":
 
-        trek = Trek(
+        trek =Trek(
             name=request.form["name"],
             location=request.form["location"],
             difficulty=request.form["difficulty"],
@@ -72,7 +72,7 @@ def add_trek():
         "admin/add_trek.html"
     )
 
-
+#trek edit route
 @admin_bp.route("/treks/edit/<int:trek_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
@@ -115,7 +115,7 @@ def edit_trek(trek_id):
         trek=trek
     )
 
-
+#trek delete route
 @admin_bp.route("/treks/delete/<int:trek_id>")
 @login_required
 @admin_required
@@ -135,7 +135,7 @@ def delete_trek(trek_id):
         url_for("admin.view_treks")
     )
 
-
+#trek assign route
 
 @admin_bp.route("/treks/assign/<int:trek_id>", methods=["GET", "POST"])
 @login_required
