@@ -25,7 +25,7 @@ def search():
 
     if keyword:
 
-        treks = =Trek.query.filter(
+        treks = Trek.query.filter(
             (Trek.name.ilike(f"%{keyword}%")) |
             (Trek.location.ilike(f"%{keyword}%"))
         ).all()

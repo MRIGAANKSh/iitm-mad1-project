@@ -18,10 +18,9 @@ from . import auth_bp
 
 from app.models import User
 from app.extensions import db
-
 @auth_bp.route("/")
 def home():
-    return redirect(url_for("auth.login"))
+    return render_template("index.html")
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():

@@ -1,88 +1,59 @@
 {% extends 'admin/layout.html' %}
-
 {% block admin_content %}
 
 <h2>
-
-Assign Staff
-
+    Assign Staff
 </h2>
 
 <div class="card shadow">
+    <div class="card-body">
+        <h4>
+            {{ trek.name }}
 
-<div class="card-body">
+        </h4>
+        <p>
+            Location :
+            {{ trek.location }}
 
-<h4>
+        </p>
 
-{{ trek.name }}
+        <form method="POST">
+            <div class="mb-3">
 
-</h4>
+                <label>
+                    Select Staff
+                </label>
 
-<p>
+                <select class="form-select" name="staff_id" required>
 
-Location :
-{{ trek.location }}
+                    <option value="">
+                        Choose Staff
+                    </option>
 
-</p>
+                    {% for member in staff_members %}
 
-<form method="POST">
+                    <option value="{{ member.id }}" {% if trek.staff_id==member.id %} selected {% endif %}>
 
-<div class="mb-3">
+                        {{ member.name }}
+                    </option>
 
-<label>
+                    {% endfor %}
 
-Select Staff
+                </select>
 
-</label>
+            </div>
 
-<select
-class="form-select"
-name="staff_id"
-required>
+            <button class="btn btn-success">
+                Assign
+            </button>
 
-<option value="">
+            <a href="{{ url_for('admin.view_treks') }}" class="btn btn-secondary">
 
-Choose Staff
+                Back
 
-</option>
-
-{% for member in staff_members %}
-
-<option
-value="{{ member.id }}"
-
-{% if trek.staff_id==member.id %}
-selected
-{% endif %}>
-
-{{ member.name }}
-
-</option>
-
-{% endfor %}
-
-</select>
-
-</div>
-
-<button
-class="btn btn-success">
-
-Assign
-
-</button>
-
-<a
-href="{{ url_for('admin.view_treks') }}"
-class="btn btn-secondary">
-
-Back
-
-</a>
-
-</form>
-
-</div>
+            </a>
+        </form>
+    </div>
 
 </div>
 

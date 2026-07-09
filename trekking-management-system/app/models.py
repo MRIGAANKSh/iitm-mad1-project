@@ -42,7 +42,7 @@ class Trek(db.Model):
         description=db.Column(db.Text)
 
         status=db.Column(
-            db.Integer,
+            db.String(20),
             default="Upcoming"
         )
 
@@ -60,8 +60,7 @@ class Trek(db.Model):
             backref="trek",
             lazy=True
         )
-        description = db.Column(db.Text)
-
+       
         price = db.Column(db.Float)
 
         image = db.Column(db.String(255))
