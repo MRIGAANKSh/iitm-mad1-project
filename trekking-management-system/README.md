@@ -75,7 +75,7 @@ No manual database creation is required.
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/MRIGAANKSh/iitm-mad1-project.git
 cd Trekking-Management-System
 ```
 
@@ -84,7 +84,7 @@ cd Trekking-Management-System
 Windows
 
 ```bash
-python -m venv venv
+python -m venv myvenv
 venv\Scripts\activate
 ```
 
