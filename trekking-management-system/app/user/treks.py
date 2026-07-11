@@ -15,8 +15,8 @@ from app.utils.decorators import user_required
 @user_required
 def view_treks():
 
-    difficulty = request.args.get("difficulty")
-    location = request.args.get("location")
+    difficulty = request.args.get("difficulty", "")
+    location = request.args.get("location", "").strip()
 
     query = Trek.query.filter_by(status="Open")
 
@@ -32,9 +32,10 @@ def view_treks():
 
     return render_template(
         "users/trek.html",
-        treks=treks
+        treks=treks,
+        difficulty=difficulty,
+        location=location
     )
-
 
 
 @user_bp.route("/treks/<int:trek_id>")

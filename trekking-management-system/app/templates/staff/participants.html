@@ -4,59 +4,155 @@
 
 <div class="container mt-4">
 
-<h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-Participants
+        <div>
 
-</h2>
+            <h2>Manage Participants</h2>
 
-<table class="table table-bordered">
+            <p class="text-muted mb-0">
 
-<thead>
+                View and manage trekkers registered for <strong>{{ trek.name }}</strong>
 
-<tr>
+            </p>
 
-<th>Name</th>
+        </div>
 
-<th>Email</th>
+        <a href="{{ url_for('staff.dashboard') }}" class="btn btn-secondary">
 
-<th>Status</th>
+            Back to Dashboard
 
-</tr>
+        </a>
 
-</thead>
+    </div>
 
-<tbody>
+    {% if bookings %}
 
-{% for booking in bookings %}
+    <table class="table table-bordered table-hover align-middle">
 
-<tr>
+        <thead class="table-dark">
 
-<td>
+            <tr>
 
-{{ booking.user.name }}
+                <th>#</th>
 
-</td>
+                <th>Name</th>
 
-<td>
+                <th>Email</th>
 
-{{ booking.user.email }}
+                <th>Status</th>
 
-</td>
+                <th width="220">Actions</th>
 
-<td>
+            </tr>
 
-{{ booking.status }}
+        </thead>
 
-</td>
+        <tbody>
 
-</tr>
+            {% for booking in bookings %}
 
-{% endfor %}
+            <tr>
 
-</tbody>
+                <td>{{ loop.index }}</td>
 
-</table>
+                <td>{{ booking.user.name }}</td>
+
+                <td>{{ booking.user.email }}</td>
+
+                <td>
+
+                    {% if booking.status == "Booked" %}
+
+                        <span class="badge bg-success">
+
+                            Booked
+
+                        </span>
+
+                    {% elif booking.status == "Completed" %}
+
+                        <span class="badge bg-primary">
+
+                            Completed
+
+                        </span>
+
+                    {% elif booking.status == "Cancelled" %}
+
+                        <span class="badge bg-danger">
+
+                            Cancelled
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-secondary">
+
+                            {{ booking.status }}
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if booking.status == "Booked" %}
+
+                        <a
+                            href="{{ url_for('staff.complete_booking', booking_id=booking.id) }}"
+                            class="btn btn-success btn-sm">
+
+                            Complete
+
+                        </a>
+
+                        <a
+                            href="{{ url_for('staff.cancel_booking', booking_id=booking.id) }}"
+                            class="btn btn-danger btn-sm">
+
+                            Cancel
+
+                        </a>
+
+                    {% else %}
+
+                        <span class="text-muted">
+
+                            No Action Available
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info text-center">
+
+        <h4>No Participants Yet</h4>
+
+        <p class="mb-0">
+
+            No users have registered for this trek yet.
+
+        </p>
+
+    </div>
+
+    {% endif %}
 
 </div>
 

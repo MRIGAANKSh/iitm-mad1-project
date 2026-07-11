@@ -2,111 +2,116 @@
 
 {% block admin_content %}
 
-<div class="d-flex justify-content-between mb-3">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Manage Treks</h2>
 
-<h2>Manage Treks</h2>
-
-<a href="{{ url_for('admin.add_trek') }}"
-class="btn btn-success">
-
-Add Trek
-
-</a>
-
+    <a href="{{ url_for('admin.add_trek') }}" class="btn btn-success">
+        + Add Trek
+    </a>
 </div>
 
-<table class="table table-bordered table-hover">
+<div class="table-responsive">
 
-<thead>
+    <table class="table table-hover table-bordered align-middle">
 
-<tr>
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Trek Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Available Slots</th>
+                <th>Status</th>
+                <th>Assigned Staff</th>
+                <th width="260">Actions</th>
+            </tr>
+        </thead>
 
-<th>ID</th>
+        <tbody>
 
-<th>Name</th>
+            {% for trek in treks %}
 
-<th>Location</th>
+            <tr>
 
-<th>Difficulty</th>
+                <td>{{ trek.id }}</td>
 
-<th>Slots</th>
+                <td>{{ trek.name }}</td>
 
-<th>Status</th>
+                <td>{{ trek.location }}</td>
 
-<th>Actions</th>
+                <td>
+                    {% if trek.difficulty == "Easy" %}
+                        <span class="badge bg-success">Easy</span>
 
-</tr>
+                    {% elif trek.difficulty == "Moderate" %}
+                        <span class="badge bg-warning text-dark">
+                            Moderate
+                        </span>
 
-</thead>
+                    {% else %}
+                        <span class="badge bg-danger">Hard</span>
+                    {% endif %}
+                </td>
 
-<tbody>
+                <td>{{ trek.available_slots }}</td>
 
-{% for trek in treks %}
+                <td>
 
-<tr>
+                    {% if trek.status == "Open" %}
+                        <span class="badge bg-success">Open</span>
 
-<td>{{ trek.id }}</td>
+                    {% elif trek.status == "Closed" %}
+                        <span class="badge bg-secondary">Closed</span>
 
-<td>{{ trek.name }}</td>
+                    {% elif trek.status == "Completed" %}
+                        <span class="badge bg-primary">Completed</span>
 
-<td>{{ trek.location }}</td>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">
+                            {{ trek.status }}
+                        </span>
+                    {% endif %}
 
-<td>{{ trek.difficulty }}</td>
+                </td>
 
-<td>{{ trek.available_slots }}</td>
+                <td>
 
-<td>{{ trek.status }}</td>
+                    {% if trek.staff %}
+                        {{ trek.staff.name }}
+                    {% else %}
+                        <span class="text-muted">Not Assigned</span>
+                    {% endif %}
 
-<td>
+                </td>
 
-<a
-class="btn btn-warning btn-sm"
+                <td>
 
-href="{{ url_for('admin.edit_trek',trek_id=trek.id) }}">
+                    <a href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
 
-Edit
+                    <a href="{{ url_for('admin.assign_staff', trek_id=trek.id) }}"
+                       class="btn btn-info btn-sm">
+                        Assign
+                    </a>
 
-</a>
+                    <a href="{{ url_for('admin.delete_trek', trek_id=trek.id) }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Delete this trek?')">
+                        Delete
+                    </a>
 
-<a
-class="btn btn-info btn-sm"
+                </td>
 
-href="{{ url_for('admin.assign_staff',trek_id=trek.id) }}">
+            </tr>
 
-Assign Staff
+            {% endfor %}
 
-</a>
-<td>
+        </tbody>
 
-{% if trek.staff %}
+    </table>
 
-{{ trek.staff.name }}
-
-{% else %}
-
-Not Assigned
-
-{% endif %}
-
-</td>
-
-<a
-class="btn btn-danger btn-sm"
-
-href="{{ url_for('admin.delete_trek',trek_id=trek.id) }}">
-
-Delete
-
-</a>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
+</div>
 
 {% endblock %}

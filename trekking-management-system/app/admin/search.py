@@ -5,12 +5,9 @@ from flask_login import login_required
 
 from . import admin_bp
 
-from app.models import User
-from app.models import Trek
-
+from app.models import User, Trek
 from app.utils.decorators import admin_required
 
-# to search the bookings or users or treks etc
 
 @admin_bp.route("/search")
 @login_required
@@ -18,6 +15,7 @@ from app.utils.decorators import admin_required
 def search():
 
     keyword = request.args.get("q", "").strip()
+    search_type = request.args.get("type", "all")
 
     treks = []
     staff = []
@@ -25,30 +23,37 @@ def search():
 
     if keyword:
 
-        treks = Trek.query.filter(
-            (Trek.name.ilike(f"%{keyword}%")) |
-            (Trek.location.ilike(f"%{keyword}%"))
-        ).all()
+        if search_type in ["all", "trek"]:
 
-        staff = User.query.filter(
-            (User.role == "staff") &
-            (
-                User.name.ilike(f"%{keyword}%") |
-                User.email.ilike(f"%{keyword}%")
-            )
-        ).all()
+            treks = Trek.query.filter(
+                (Trek.name.ilike(f"%{keyword}%")) |
+                (Trek.location.ilike(f"%{keyword}%"))
+            ).all()
 
-        users =User.query.filter(
-            (User.role == "user") &
-            (
-                User.name.ilike(f"%{keyword}%") |
-                User.email.ilike(f"%{keyword}%")
-            )
-        ).all()
+        if search_type in ["all", "staff"]:
+
+            staff = User.query.filter(
+                (User.role == "staff") &
+                (
+                    User.name.ilike(f"%{keyword}%") |
+                    User.email.ilike(f"%{keyword}%")
+                )
+            ).all()
+
+        if search_type in ["all", "user"]:
+
+            users = User.query.filter(
+                (User.role == "user") &
+                (
+                    User.name.ilike(f"%{keyword}%") |
+                    User.email.ilike(f"%{keyword}%")
+                )
+            ).all()
 
     return render_template(
         "admin/search.html",
         keyword=keyword,
+        search_type=search_type,
         treks=treks,
         staff=staff,
         users=users

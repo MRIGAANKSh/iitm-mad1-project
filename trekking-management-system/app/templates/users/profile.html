@@ -4,77 +4,141 @@
 
 <div class="container mt-5">
 
-<div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-<div class="col-md-7">
+        <div class="col-lg-8">
 
-<div class="card shadow">
+            <div class="card shadow">
 
-<div class="card-header bg-success text-white">
+                <!-- Header -->
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
 
-<h3>My Profile</h3>
+                    <div class="d-flex align-items-center">
 
-</div>
+                        <a href="{{ url_for('user.dashboard') }}"
+                           class="btn btn-light btn-sm me-3">
 
-<div class="card-body">
+                            ←
 
-<form method="POST">
+                        </a>
 
-<div class="mb-3">
+                        <h3 class="mb-0">
 
-<label>Name</label>
+                            My Profile
 
-<input
-type="text"
-name="name"
-class="form-control"
-value="{{ current_user.name }}"
-required>
+                        </h3>
 
-</div>
+                    </div>
 
-<div class="mb-3">
+                    <span class="badge bg-light text-dark">
 
-<label>Email</label>
+                        {{ current_user.role|title }}
 
-<input
-type="email"
-name="email"
-class="form-control"
-value="{{ current_user.email }}"
-required>
+                    </span>
 
-</div>
+                </div>
 
-<div class="mb-3">
+                <!-- Body -->
+                <div class="card-body">
 
-<label>Phone</label>
+                    <form method="POST">
 
-<input
-type="text"
-name="phone"
-class="form-control"
-value="{{ current_user.phone }}"
-required>
+                        <div class="row">
 
-</div>
+                            <div class="col-md-6 mb-3">
 
-<button
-class="btn btn-success">
+                                <label class="form-label">
 
-Save Changes
+                                    Full Name
 
-</button>
+                                </label>
 
-</form>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    value="{{ current_user.name }}"
+                                    required>
 
-</div>
+                            </div>
 
-</div>
+                            <div class="col-md-6 mb-3">
 
-</div>
+                                <label class="form-label">
 
-</div>
+                                    Email Address
+
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    value="{{ current_user.email }}"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Phone Number
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                value="{{ current_user.phone }}"
+                                required>
+
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+
+                            <button class="btn btn-success">
+
+                                Save Changes
+
+                            </button>
+
+                            <a
+                                href="{{ url_for('user.change_password') }}"
+                                class="btn btn-warning">
+
+                                Change Password
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer text-muted">
+
+                    <small>
+
+                        Member since:
+                        {{ current_user.created_at.strftime("%d %B %Y") }}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

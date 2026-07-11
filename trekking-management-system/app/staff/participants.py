@@ -8,12 +8,16 @@ from flask_login import current_user
 
 from . import staff_bp
 
+from app.extensions import db
 from app.models import Trek
+from app.models import Booking
 
 from app.utils.decorators import staff_required
 
 
-#participants in the trek...
+# ==========================
+# View Participants
+# ==========================
 
 @staff_bp.route("/participants/<int:trek_id>")
 @login_required
@@ -21,19 +25,102 @@ from app.utils.decorators import staff_required
 def participants(trek_id):
 
     trek = Trek.query.get_or_404(trek_id)
+
     if trek.staff_id != current_user.id:
+
         flash(
             "Unauthorized",
             "danger"
         )
+
         return redirect(
             url_for("staff.dashboard")
         )
 
-    bookings =trek.bookings
+    bookings = trek.bookings
 
     return render_template(
         "staff/participants.html",
         trek=trek,
         bookings=bookings
+    )
+
+
+# ==========================
+# Complete Booking
+# ==========================
+
+@staff_bp.route("/booking/<int:booking_id>/complete")
+@login_required
+@staff_required
+def complete_booking(booking_id):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.trek.staff_id != current_user.id:
+
+        flash(
+            "Unauthorized",
+            "danger"
+        )
+
+        return redirect(
+            url_for("staff.dashboard")
+        )
+
+    booking.status = "Completed"
+
+    db.session.commit()
+
+    flash(
+        "Participant marked as completed.",
+        "success"
+    )
+
+    return redirect(
+        url_for(
+            "staff.participants",
+            trek_id=booking.trek_id
+        )
+    )
+
+
+# ==========================
+# Cancel Booking
+# ==========================
+
+@staff_bp.route("/booking/<int:booking_id>/cancel")
+@login_required
+@staff_required
+def cancel_booking(booking_id):
+
+    booking = Booking.query.get_or_404(booking_id)
+
+    if booking.trek.staff_id != current_user.id:
+
+        flash(
+            "Unauthorized",
+            "danger"
+        )
+
+        return redirect(
+            url_for("staff.dashboard")
+        )
+
+    booking.status = "Cancelled"
+
+    booking.trek.available_slots += 1
+
+    db.session.commit()
+
+    flash(
+        "Booking cancelled successfully.",
+        "warning"
+    )
+
+    return redirect(
+        url_for(
+            "staff.participants",
+            trek_id=booking.trek_id
+        )
     )
