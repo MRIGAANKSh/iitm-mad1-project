@@ -13,14 +13,19 @@ from app.utils.decorators import admin_required
 # this function view the bookings to the admins.
 def view_bookings():
     status =request.args.get("status")
+
+
     query =Booking.query
     if status:
         query = query.filter_by(status=status)
-    bookings = query.order_by(
-        Booking.bookings_date.desc()
+
+    bookings = query.order_by(  Booking.bookings_date.desc()
+                              
     ).all()
-    return render_template(
-        "admin/bookings.html",
+
+
+
+    return render_template("admin/bookings.html",
         bookings=bookings,
         selected_status=status
     )

@@ -13,7 +13,7 @@ from app.extensions import db
 from app.utils.decorators import admin_required
 
 
-#users route
+#users route to provide the admin user data... 
 
 @admin_bp.route("/users")
 @login_required
@@ -29,7 +29,7 @@ def manage_users():
         users=users
     )
 
-#users blacklist route
+#users blacklist route to blacklist the uswr 
 @admin_bp.route("/users/blacklist/<int:user_id>")
 @login_required
 @admin_required
@@ -44,16 +44,13 @@ def blacklist_user(user_id):
 
     db.session.commit()
 
-    flash(
-        "User Blacklisted",
-        "warning"
-    )
+    flash("User Blacklisted","warning")
 
     return redirect(
         url_for("admin.manage_users")
     )
 
-#users activate route
+#users activate route... to activate the user
 
 @admin_bp.route("/users/activate/<int:user_id>")
 @login_required

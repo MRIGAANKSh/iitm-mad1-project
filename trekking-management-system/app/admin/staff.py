@@ -16,24 +16,21 @@ from app.utils.decorators import admin_required
 @admin_bp.route("/staff")
 
 @login_required
-@admin_required
+@admin_required # admin only route it is 
 def manage_staff():
 
     staff = User.query.filter_by(
-        role="staff"
-    ).all()
+        role="staff").all()
 
-    return render_template(
-        "admin/staff.html",
-        staff=staff
-    )
+    return render_template("admin/staff.html",
+        staff=staff)
 
 
 # route for staff approval by admin
 @admin_bp.route("/staff/approve/<int:user_id>")
 
 @login_required
-@admin_required
+@admin_required # it is also a admin route...
 def approve_staff(user_id):
 
     staff = User.query.filter_by(
@@ -45,14 +42,10 @@ def approve_staff(user_id):
 
     db.session.commit()
 
-    flash(
-        "Staff Approved Successfully",
-        "success"
+    flash("Staff Approved Successfully","success"
     )
 
-    return redirect(
-        url_for("admin.manage_staff")
-    )
+    return redirect(url_for("admin.manage_staff"))
 
 
 
@@ -71,14 +64,9 @@ def blacklist_staff(user_id):
 
     db.session.commit()
 
-    flash(
-        "Staff Blacklisted",
-        "warning"
-    )
+    flash("Staff Blacklisted",  "warning")
 
-    return redirect(
-        url_for("admin.manage_staff")
-    )
+    return redirect(url_for("admin.manage_staff"))
 
 
 @admin_bp.route("/staff/reactivate/<int:user_id>")
@@ -92,15 +80,10 @@ def reactivate_staff(user_id):
     role="staff"
 ).first_or_404()
 
-    staff.status = "active"
-
+    staff.status ="active"
     db.session.commit()
 
-    flash(
-        "Staff Reactivated",
-        "success"
-    )
+    flash("Staff Reactivated",
+        "success")
 
-    return redirect(
-        url_for("admin.manage_staff")
-    )
+    return redirect(url_for("admin.manage_staff"))

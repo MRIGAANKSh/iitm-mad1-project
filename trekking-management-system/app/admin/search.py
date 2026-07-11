@@ -9,6 +9,7 @@ from app.models import User, Trek
 from app.utils.decorators import admin_required
 
 
+# this is the search route for admin providing the serach functionality to the user , thus allowing the admin to search the treks,users,staff etc.
 @admin_bp.route("/search")
 @login_required
 @admin_required
@@ -22,33 +23,26 @@ def search():
     users = []
 
     if keyword:
-
         if search_type in ["all", "trek"]:
-
             treks = Trek.query.filter(
                 (Trek.name.ilike(f"%{keyword}%")) |
-                (Trek.location.ilike(f"%{keyword}%"))
-            ).all()
+                (Trek.location.ilike(f"%{keyword}%"))).all()
 
         if search_type in ["all", "staff"]:
-
             staff = User.query.filter(
                 (User.role == "staff") &
                 (
                     User.name.ilike(f"%{keyword}%") |
                     User.email.ilike(f"%{keyword}%")
-                )
-            ).all()
+                ) ).all()
 
         if search_type in ["all", "user"]:
-
             users = User.query.filter(
                 (User.role == "user") &
                 (
                     User.name.ilike(f"%{keyword}%") |
                     User.email.ilike(f"%{keyword}%")
-                )
-            ).all()
+                )).all()
 
     return render_template(
         "admin/search.html",
