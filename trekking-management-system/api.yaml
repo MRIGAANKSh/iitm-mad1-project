@@ -1,0 +1,486 @@
+
+info:
+  title: Trekking Management System API
+  description: >
+    Backend API for the Trekking Management System. Handles trek listings,
+    bookings, staff assignments, and user/admin account management.
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000
+    description: Local development server
+
+tags:
+  - name: Auth
+    description: Login, registration, and session handling
+  - name: Admin
+    description: Admin-only tools for managing users, staff, and treks
+  - name: Staff
+    description: Endpoints used by staff to manage assigned treks and participants
+  - name: User
+    description: Endpoints for regular users to browse and book treks
+
+paths:
+  /auth/:
+    get:
+      tags: [Auth]
+      summary: Landing page
+      description: Redirects to login or dashboard depending on session state.
+      responses:
+        '200':
+          description: Page rendered successfully
+
+  /auth/login:
+    get:
+      tags: [Auth]
+      summary: Show login form
+      responses:
+        '200':
+          description: Login form rendered
+    post:
+      tags: [Auth]
+      summary: Authenticate a user
+      description: Validates credentials and starts a session on success.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required: [email, password]
+      responses:
+        '200':
+          description: Login successful, session created
+        '401':
+          description: Invalid credentials
+
+  /auth/register:
+    get:
+      tags: [Auth]
+      summary: Show registration form
+      responses:
+        '200':
+          description: Registration form rendered
+
+  /auth/logout:
+    get:
+      tags: [Auth]
+      summary: Log out the current user
+      description: Clears the active session and redirects to login.
+      responses:
+        '200':
+          description: Session cleared
+
+  /admin/dashboard:
+    get:
+      tags: [Admin]
+      summary: Admin dashboard
+      description: Overview of bookings, users, staff, and trek stats.
+      responses:
+        '200':
+          description: Dashboard rendered
+
+  /admin/bookings:
+    get:
+      tags: [Admin]
+      summary: List all bookings
+      responses:
+        '200':
+          description: List of bookings returned
+
+  /admin/search:
+    get:
+      tags: [Admin]
+      summary: Search across users, staff, and treks
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Search term
+      responses:
+        '200':
+          description: Search results returned
+
+  /admin/staff:
+    get:
+      tags: [Admin]
+      summary: List all staff accounts
+      responses:
+        '200':
+          description: List of staff returned
+
+  /admin/staff/approve/{user_id}:
+    get:
+      tags: [Admin]
+      summary: Approve a pending staff account
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Staff account approved
+
+  /admin/staff/blacklist/{user_id}:
+    get:
+      tags: [Admin]
+      summary: Blacklist a staff account
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Staff account blacklisted
+
+  /admin/staff/reactivate/{user_id}:
+    get:
+      tags: [Admin]
+      summary: Reactivate a previously blacklisted staff account
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Staff account reactivated
+
+  /admin/treks:
+    get:
+      tags: [Admin]
+      summary: List all treks
+      responses:
+        '200':
+          description: List of treks returned
+
+  /admin/treks/add:
+    get:
+      tags: [Admin]
+      summary: Show form to add a new trek
+      responses:
+        '200':
+          description: Trek creation form rendered
+    post:
+      tags: [Admin]
+      summary: Create a new trek
+      responses:
+        '201':
+          description: Trek created
+
+  /admin/treks/edit/{trek_id}:
+    get:
+      tags: [Admin]
+      summary: Show edit form for a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trek edit form rendered
+    post:
+      tags: [Admin]
+      summary: Update a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trek updated
+
+  /admin/treks/delete/{trek_id}:
+    get:
+      tags: [Admin]
+      summary: Delete a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trek deleted
+
+  /admin/treks/assign/{trek_id}:
+    get:
+      tags: [Admin]
+      summary: Show staff assignment form for a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Assignment form rendered
+    post:
+      tags: [Admin]
+      summary: Assign staff to a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Staff assigned to trek
+
+  /admin/users:
+    get:
+      tags: [Admin]
+      summary: List all users
+      responses:
+        '200':
+          description: List of users returned
+
+  /admin/users/blacklist/{user_id}:
+    get:
+      tags: [Admin]
+      summary: Blacklist a user account
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User account blacklisted
+
+  /admin/users/activate/{user_id}:
+    get:
+      tags: [Admin]
+      summary: Reactivate a user account
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User account activated
+
+  /admin/users/search:
+    get:
+      tags: [Admin]
+      summary: Search user accounts
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results returned
+
+  /staff/dashboard:
+    get:
+      tags: [Staff]
+      summary: Staff dashboard
+      description: Overview of treks assigned to the logged-in staff member.
+      responses:
+        '200':
+          description: Dashboard rendered
+
+  /staff/trek/{trek_id}:
+    get:
+      tags: [Staff]
+      summary: View details for an assigned trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trek details returned
+    post:
+      tags: [Staff]
+      summary: Update details for an assigned trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trek updated
+
+  /staff/participants/{trek_id}:
+    get:
+      tags: [Staff]
+      summary: List participants booked on a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Participant list returned
+
+  /staff/booking/{booking_id}/complete:
+    get:
+      tags: [Staff]
+      summary: Mark a booking as completed
+      parameters:
+        - name: booking_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Booking marked as completed
+
+  /staff/booking/{booking_id}/cancel:
+    get:
+      tags: [Staff]
+      summary: Cancel a booking
+      parameters:
+        - name: booking_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Booking cancelled
+
+  /user/dashboard:
+    get:
+      tags: [User]
+      summary: User dashboard
+      description: Overview of the logged-in user's upcoming and past bookings.
+      responses:
+        '200':
+          description: Dashboard rendered
+
+  /user/treks:
+    get:
+      tags: [User]
+      summary: Browse available treks
+      responses:
+        '200':
+          description: List of treks returned
+
+  /user/treks/{trek_id}:
+    get:
+      tags: [User]
+      summary: View details for a single trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trek details returned
+
+  /user/book/{trek_id}:
+    get:
+      tags: [User]
+      summary: Book a trek
+      parameters:
+        - name: trek_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Booking created
+
+  /user/bookings:
+    get:
+      tags: [User]
+      summary: List the current user's bookings
+      responses:
+        '200':
+          description: List of bookings returned
+
+  /user/cancel/{booking_id}:
+    get:
+      tags: [User]
+      summary: Cancel a booking
+      parameters:
+        - name: booking_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Booking cancelled
+
+  /user/profile:
+    get:
+      tags: [User]
+      summary: View profile
+      responses:
+        '200':
+          description: Profile data returned
+    post:
+      tags: [User]
+      summary: Update profile
+      responses:
+        '200':
+          description: Profile updated
+
+  /user/change-password:
+    get:
+      tags: [User]
+      summary: Show change-password form
+      responses:
+        '200':
+          description: Form rendered
+    post:
+      tags: [User]
+      summary: Change account password
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                current_password:
+                  type: string
+                  format: password
+                new_password:
+                  type: string
+                  format: password
+              required: [current_password, new_password]
+      responses:
+        '200':
+          description: Password updated
+        '400':
+          description: Current password incorrect or new password invalid
