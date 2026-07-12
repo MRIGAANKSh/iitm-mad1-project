@@ -1,61 +1,53 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
 
-<div class="container">
+    <div class="container">
 
-<a
-class="navbar-brand"
-href="/">
+        <a class="navbar-brand" href="/">
 
-Trekking Management System
+            Trekking Management System
 
-</a>
+        </a>
 
-<ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto">
 
-{% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated %}
 
-<li class="nav-item">
+            <li class="nav-item">
 
-<a
-class="nav-link"
-href="/logout">
+                <a class="nav-link" href="/logout">
 
-Logout
+                    Logout
 
-</a>
+                </a>
 
-</li>
+            </li>
 
-{% else %}
+            {% else %}
 
-<li class="nav-item">
+            <li class="nav-item">
 
-<a
-class="nav-link"
-href="/login">
+                <a class="nav-link" href="/login">
 
-Login
+                    Login
 
-</a>
+                </a>
 
-</li>
+            </li>
 
-<li class="nav-item">
+            <li class="nav-item">
 
-<a
-class="nav-link"
-href="/register">
+                <a class="nav-link" href="/register">
 
-Register
+                    Register
 
-</a>
+                </a>
 
-</li>
+            </li>
 
-{% endif %}
+            {% endif %}
 
-</ul>
+        </ul>
 
-</div>
+    </div>
 
 </nav>

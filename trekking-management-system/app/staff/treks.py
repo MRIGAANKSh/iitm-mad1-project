@@ -25,30 +25,19 @@ def manage_trek(trek_id):
     trek = Trek.query.get_or_404(trek_id)
     if trek.staff_id != current_user.id:
 
-        flash(
-            "Unauthorized",
-            "danger"
-        )
-        return redirect(
-            url_for("staff.dashboard")
-        )
+        flash( "Unauthorized", "danger" )
+
+        return redirect( url_for("staff.dashboard")  )
 
     if request.method=="POST":
 
-        trek.available_slots=int(
-            request.form["slots"]
-        )
+        trek.available_slots=int(   request.form["slots"]  )
+
         trek.status=request.form["status"]
 
         db.session.commit()
-        flash(
-            "Trek Updated",
-            "success"
-        )
-        return redirect(
-            url_for("staff.dashboard")
-        )
-    return render_template(
-        "staff/manage_trek.html",
-        trek=trek
-    )
+        flash(   "Trek Updated",  "success" )
+
+        return redirect(   url_for("staff.dashboard") )
+    
+    return render_template(    "staff/manage_trek.html",  trek=trek  )

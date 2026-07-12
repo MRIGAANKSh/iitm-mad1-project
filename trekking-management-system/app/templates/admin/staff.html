@@ -4,116 +4,107 @@
 
 <h2 class="mb-4">
 
-Manage Staff
+    Manage Staff
 
 </h2>
 
 <table class="table table-striped">
 
-<thead>
+    <thead>
 
-<tr>
+        <tr>
 
-<th>ID</th>
+            <th>ID</th>
 
-<th>Name</th>
+            <th>Name</th>
 
-<th>Email</th>
+            <th>Email</th>
 
-<th>Status</th>
+            <th>Status</th>
 
-<th>Action</th>
+            <th>Action</th>
 
-</tr>
+        </tr>
 
-</thead>
+    </thead>
 
-<tbody>
+    <tbody>
 
-{% for member in staff %}
+        {% for member in staff %}
 
-<tr>
+        <tr>
 
-<td>{{ member.id }}</td>
+            <td>{{ member.id }}</td>
 
-<td>{{ member.name }}</td>
+            <td>{{ member.name }}</td>
 
-<td>{{ member.email }}</td>
+            <td>{{ member.email }}</td>
 
-<td>
+            <td>
 
-{% if member.status=="pending" %}
+                {% if member.status=="pending" %}
 
-<span class="badge bg-warning">
+                <span class="badge bg-warning">
 
-Pending
+                    Pending
 
-</span>
+                </span>
 
-{% elif member.status=="active" %}
+                {% elif member.status=="active" %}
 
-<span class="badge bg-success">
+                <span class="badge bg-success">
 
-Active
+                    Active
 
-</span>
+                </span>
 
-{% else %}
+                {% else %}
 
-<span class="badge bg-danger">
+                <span class="badge bg-danger">
 
-Blacklisted
+                    Blacklisted
 
-</span>
+                </span>
 
-{% endif %}
+                {% endif %}
 
-</td>
+            </td>
 
-<td>
+            <td>
 
-{% if member.status=="pending" %}
+                {% if member.status=="pending" %}
 
-<a
-class="btn btn-success btn-sm"
+                <a class="btn btn-success btn-sm" href="{{ url_for('admin.approve_staff',user_id=member.id) }}">
 
-href="{{ url_for('admin.approve_staff',user_id=member.id) }}">
+                    Approve
 
-Approve
+                </a>
 
-</a>
+                {% elif member.status=="active" %}
 
-{% elif member.status=="active" %}
+                <a class="btn btn-danger btn-sm" href="{{ url_for('admin.blacklist_staff',user_id=member.id) }}">
 
-<a
-class="btn btn-danger btn-sm"
+                    Blacklist
 
-href="{{ url_for('admin.blacklist_staff',user_id=member.id) }}">
+                </a>
 
-Blacklist
+                {% else %}
 
-</a>
+                <a class="btn btn-primary btn-sm" href="{{ url_for('admin.reactivate_staff',user_id=member.id) }}">
 
-{% else %}
+                    Reactivate
 
-<a
-class="btn btn-primary btn-sm"
+                </a>
 
-href="{{ url_for('admin.reactivate_staff',user_id=member.id) }}">
+                {% endif %}
 
-Reactivate
+            </td>
 
-</a>
+        </tr>
 
-{% endif %}
+        {% endfor %}
 
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
+    </tbody>
 
 </table>
 

@@ -16,83 +16,61 @@ from app.utils.decorators import admin_required
 #users route to provide the admin user data... 
 
 @admin_bp.route("/users")
-@login_required
-@admin_required
+@login_required # logijnn requird 
+@admin_required # amdin required 
 def manage_users():
 
-    users = User.query.filter_by(
-        role="user"
-    ).all()
+    users = User.query.filter_by(   role="user"   ).all()
 
-    return render_template(
-        "admin/users.html",
-        users=users
-    )
+    return render_template( "admin/users.html", users=users  )
 
 #users blacklist route to blacklist the uswr 
 @admin_bp.route("/users/blacklist/<int:user_id>")
-@login_required
-@admin_required
+
+
+@login_required 
+@admin_required # admin required compulsion
 def blacklist_user(user_id):
 
-    user = User.query.filter_by(
-        id=user_id,
-        role="user"
-    ).first_or_404()
+    user = User.query.filter_by( id=user_id, role="user"  ).first_or_404()
 
     user.status = "blacklisted"
 
     db.session.commit()
-
+    # flashes msgs to be shown
     flash("User Blacklisted","warning")
 
-    return redirect(
-        url_for("admin.manage_users")
-    )
+    return redirect(  url_for("admin.manage_users")    )
 
-#users activate route... to activate the user
+#users activate route... to activate the user by the amdin again same as the staff..
 
 @admin_bp.route("/users/activate/<int:user_id>")
 @login_required
-@admin_required
+@admin_required # amdin login required...
 def activate_user(user_id):
 
-    user = User.query.filter_by(
-        id=user_id,
-        role="user"
-    ).first_or_404()
+    user = User.query.filter_by(  id=user_id, role="user" ).first_or_404()
 
     user.status = "active"
 
     db.session.commit()
 
-    flash(
-        "User Activated",
-        "success"
+    flash(  "User Activated",  "success"
     )
 
-    return redirect(
-        url_for("admin.manage_users")
-    )
+    return redirect(   url_for("admin.manage_users")   )
 
 #users seach route
 @admin_bp.route("/users/search")
-@login_required
-@admin_required
+@login_required # login 
+@admin_required # amdin
 def search_users():
 
     keyword = request.args.get("q", "").strip()
 
-    users = User.query.filter(
-        User.role == "user",
-        (
-            User.name.ilike(f"%{keyword}%")
-        ) | (
-            User.email.ilike(f"%{keyword}%")
-        )
-    ).all()
+    users = User.query.filter( User.role == "user",
+        ( User.name.ilike(f"%{keyword}%")  ) | ( User.email.ilike(f"%{keyword}%")    )).all()
 
-    return render_template(
-        "admin/users.html",
+    return render_template(  "admin/users.html",
         users=users
     )

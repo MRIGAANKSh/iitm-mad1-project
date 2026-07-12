@@ -9,7 +9,5 @@ from . import user_bp
 @user_required
 def dashboard():
 
-    return render_template(
-        "users/dashboard.html"
-    )
+    return render_template( "users/dashboard.html" )
 

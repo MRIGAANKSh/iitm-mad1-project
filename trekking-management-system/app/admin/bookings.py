@@ -25,7 +25,6 @@ def view_bookings():
 
 
 
-    return render_template("admin/bookings.html",
-        bookings=bookings,
+    return render_template("admin/bookings.html",bookings=bookings,
         selected_status=status
     )

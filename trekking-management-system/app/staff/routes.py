@@ -6,11 +6,14 @@ from app.utils.decorators import staff_required
 from . import staff_bp
 
 
-#dashbaord route
+#dashbaord route for the staff... 
 @staff_bp.route("/dashboard")
+
 @login_required
-@staff_required
-def dashboard():
+
+@staff_required # staff required... for the dashbaord staff
+
+def dashboard(): # dashboard route... 
 
     return render_template(
         "staff/dashboard.html"

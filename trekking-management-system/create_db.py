@@ -5,10 +5,10 @@ from werkzeug.security import generate_password_hash
 app = create_app()
 
 with app.app_context():
-    # Create all database tables
+    # Create all database tables here it create all the tables 
     db.create_all()
 
-    # Create default admin if it doesn't exist
+    # Create default admin if it doesn't exist, 
     if not User.query.filter_by(email="admin@gmail.com").first():
 
         admin = User(
@@ -22,7 +22,7 @@ with app.app_context():
         db.session.add(admin)
         db.session.commit()
 
-        print("✅ Default admin created.")
+        print(" Default admin created.")
 
     else:
-        print("ℹ️ Admin already exists.")
+        print("ℹ Admin already exists.")

@@ -4,90 +4,65 @@
 
 <div class="container mt-4">
 
-<h2>
+    <h2>
 
-{{ trek.name }}
+        {{ trek.name }}
 
-</h2>
+    </h2>
 
-<form method="POST">
+    <form method="POST">
 
-<div class="mb-3">
+        <div class="mb-3">
 
-<label>
+            <label>
 
-Available Slots
+                Available Slots
 
-</label>
+            </label>
 
-<input
+            <input type="number" class="form-control" name="slots" value="{{ trek.available_slots }}">
 
-type="number"
+        </div>
 
-class="form-control"
+        <div class="mb-3">
 
-name="slots"
+            <label>
 
-value="{{ trek.available_slots }}">
+                Status
 
-</div>
+            </label>
 
-<div class="mb-3">
+            <select class="form-select" name="status">
 
-<label>
+                <option {% if trek.status=="Open" %} selected {% endif %}>
 
-Status
+                    Open
 
-</label>
+                </option>
 
-<select
+                <option {% if trek.status=="Closed" %} selected {% endif %}>
 
-class="form-select"
+                    Closed
 
-name="status">
+                </option>
 
-<option
+                <option {% if trek.status=="Completed" %} selected {% endif %}>
 
-{% if trek.status=="Open" %}
-selected
-{% endif %}>
+                    Completed
 
-Open
+                </option>
 
-</option>
+            </select>
 
-<option
+        </div>
 
-{% if trek.status=="Closed" %}
-selected
-{% endif %}>
+        <button class="btn btn-success">
 
-Closed
+            Save
 
-</option>
+        </button>
 
-<option
-
-{% if trek.status=="Completed" %}
-selected
-{% endif %}>
-
-Completed
-
-</option>
-
-</select>
-
-</div>
-
-<button
-class="btn btn-success">
-
-Save
-
-</button>
-
-</form>
+    </form>
 
 </div>
 
